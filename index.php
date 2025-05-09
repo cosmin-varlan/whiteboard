@@ -20,15 +20,17 @@
 
 
 
-
-
     // ************   Parsam URLul ca sa vedem care este controllerul si care e actiunea **************    
     $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https" : "http";
+    //echo "protocol: ".$protocol."<br>";
     $domain = $_SERVER['HTTP_HOST'];
+   // echo "doemniu: ".$domain."<br>";
     $uri = $_SERVER["REQUEST_URI"];
+    //echo "URI: ".$uri."<br>";
     $siteAddress = $protocol. "://" .$domain."/";
-
+    //echo "Site Address: ".$siteAddress."<br>";
     $_SESSION["domain"] = $domain; 
+
         
     $infos = explode('/', $uri); 
 
@@ -43,6 +45,8 @@
     if ($controllerPosition>1) $siteAddress.= ($infos[1]."/");
     $_SESSION["siteAddress"] = $siteAddress;
 
+    //echo "Site Address: ".$siteAddress;
+
     if ($controllerPosition != -1)  {
         $controller = $infos[$controllerPosition];
         if ($controllerPosition + 1 < count($infos)) $actiune = $infos[$controllerPosition + 1];
@@ -53,23 +57,24 @@
                 array_push($parametri, $infos[$i]);
         }                    
     }
+
+    //print_rr($parametri);
+
     // ------------ terminat cu parsarea URL ---------------
-
-
-
     if (isset($_SESSION["user"]))
     {        
         // daca avem setat un user atunci ii vom verifica drepturile in controller
         $control = new $controller($actiune, $parametri);
+        //print_rr($_SESSION["user"]);
     }
     else
     {
         // daca nu am setat un user atunci dau voie doar la anumite controllere (publice)
         if (($controller == "UserController" && ($actiune=="auth" || $actiune=="register"))||
             ($controller == "LandingController" && $actiune=="none"))
-            $control = new $controller($actiune, $parametri);
+             $control = new $controller($actiune, $parametri);
         else {            
-            //header('Location: https://poate_un_url_de_autentificare.ro');
+            echo "Ar trebui sa te autentifici daca vrei sa ajungi la aceasta ruta...";
             exit();
         }
     }

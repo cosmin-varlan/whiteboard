@@ -13,7 +13,7 @@ abstract class Controller
             echo "$modelName nu a fost definita -> halt !";
             exit();
         };
-
+        
         $this->model = new $modelName;
 
         $viewName = str_replace("Controller", "View", get_class($this));

@@ -27,7 +27,7 @@
     <body>
         <div id="container">
             <div id="whiteboards" >
-                <form action="{SITEADDRESS}whiteboard/UserController/addWhiteBoard" method="POST">  
+                <form action="{SITEADDRESS}whiteboard/WhiteBoardController/addWhiteBoard" method="POST">  
                     <input type="text" name="wb_topic">
                     <input type="submit" value="+">
                 </form>     
@@ -36,6 +36,12 @@
             </div>
 
             <div id="whiteboard">
+                <form action="{SITEADDRESS}whiteboard/WhiteBoardController/addMessage" method="POST"> 
+                    <input type="hidden" name="whiteboard" value="{WHITEBOARDID}"> 
+                    <input type="text" name="message" style="width:90%">
+                    <input type="submit" value="Send">
+                </form>
+                <br>
                 {THISWHITEBOARD}
             </div>
         </div>
